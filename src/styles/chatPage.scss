@@ -1,0 +1,24 @@
+@import "./variables";
+
+.chat-page {
+  display: flex;
+  height: 100vh;
+  width: calc(100vw - 580px);
+}
+
+.chat-window {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.deadline-slider {
+  width: 250px;
+  background-color: $fourth-color;
+  padding: 20px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+}
