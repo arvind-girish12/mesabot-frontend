@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../styles/fileuploader.scss";
-import { uploadContent } from "../api/uploadApi";
+import { uploadContent, clearDatabase } from "../api/uploadApi";
 
 const FileUploader = () => {
   const [subject, setSubject] = useState("");
@@ -15,6 +15,14 @@ const FileUploader = () => {
     }
   };
 
+  const handleClear = async () => {
+    try {
+      await clearDatabase();
+    } catch (error) {
+      console.error("Error clearing database:", error);
+    }
+  };
+
   return (
     <div className="file-uploader">
       <h3>Upload Content</h3>
@@ -22,6 +30,7 @@ const FileUploader = () => {
       <textarea placeholder="Enter your text" value={text} onChange={(e) => setText(e.target.value)}></textarea>
       <input type="file" onChange={(e) => setFile(e.target.files[0])} />
       <button onClick={handleUpload}>Submit</button>
+      <button onClick={handleClear} className='clear-button'>Clear Database</button>
     </div>
   );
 };

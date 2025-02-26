@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/chatwindow.scss";
 import { sendMessage } from "../api/chatApi";
+import ReactMarkdown from "react-markdown";
 
 const LoadingDots = () => {
   return (
@@ -34,9 +35,12 @@ const ChatWindow = () => {
     const userMessage = { text: input, sender: "user" };
     setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
+    const memory = messages
+      .map(msg => `${msg.sender}: '${msg.text}'`)
+      .join(", ") + `, user: '${input}'`;
 
     try {
-      const response = await sendMessage(input);
+      const response = await sendMessage(input, memory);
       const botMessage = { text: response.response, sender: "bot" };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
@@ -70,7 +74,11 @@ const ChatWindow = () => {
       <div className="messages">
         {messages.map((msg, index) => (
           <div key={index} className={`message ${msg.sender} ${msg.isError ? 'error' : ''}`}>
-            {msg.text}
+            {msg.sender === "bot" ? (
+              <ReactMarkdown>{msg.text}</ReactMarkdown>
+            ) : (
+              msg.text
+            )}
           </div>
         ))}
         {isLoading && (

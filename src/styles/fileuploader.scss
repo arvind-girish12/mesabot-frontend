@@ -33,4 +33,9 @@
       background: darken($primary-color, 10%);
     }
   }
+
+  .clear-button {
+    background: $error-color;
+    margin-left: 32px;
+  }
 }
